@@ -11,14 +11,14 @@
 
 #include "FBullCowGame.hpp"
 
+using int32 = int;
+using FText = std::string;
+
 
 void PrintIntro();
 void PlayGame();
 bool AskToPlayAgain();
-std::string GetGuess(int Number);
-
-
-// TESTING GIT'S DIFFERENCES
+FText GetGuess(int32 Number);
 
 
 // The main function
@@ -49,7 +49,7 @@ void PrintIntro()
 {
     
     // Define the constant word length
-    constexpr int WORD_LENGTH = 5;
+    constexpr int32 WORD_LENGTH = 5;
     
     // Output the title message
     std::cout << "Welcome to Bulls and Cows!\n";
@@ -60,19 +60,21 @@ void PrintIntro()
 void PlayGame()
 {
     FBullCowGame BCGame;
-    int MaxTries = BCGame.GetMaxTries();
+    int32 MaxTries = BCGame.GetMaxTries();
     std::cout << "TRIES!! : " << MaxTries << std::endl;
     
     // Loop for the number of turns
-    for (int Count = 0; Count < MaxTries; Count++)
+    for (int32 Count = 0; Count < MaxTries; Count++)
     {
         
         // TODO: Make sure that the guess is valid
-        std::string Guess = GetGuess(Count);
+        FText Guess = GetGuess(Count);
         
-        // TODO: Send the guess to the game and display the bulls and cows
+        // Send the guess to the game
+        FBullCowCount BCCount = BCGame.SubmitGuess(Guess);
         
-        std::cout << "Your guess was " << Guess << std::endl;
+        // Print out to the user the bulls and cows
+        std::cout << "Bulls: " << BCCount.Bull << "\nCows: " << BCCount.Cow << "\n";
     }
 }
 
@@ -80,18 +82,18 @@ void PlayGame()
 bool AskToPlayAgain()
 {
     std::cout << "Do you want to play again? (y/n) \n> ";
-    std::string Response = "";
+    FText Response = "";
     getline(std::cin, Response);
     return (Response[0] == 'y' || Response[0] == 'Y');
 }
 
 // Gets the guess from the user.
-std::string GetGuess(int GuessNumber) {
+FText GetGuess(int32 GuessNumber) {
     std::cout << "Try " << (GuessNumber + 1) << ".\nEnter your guess: \n> ";
 
     
     // Get a guess from the player
-    std::string Guess = "";
+    FText Guess = "";
     getline(std::cin, Guess);
     
     // Return The Guess

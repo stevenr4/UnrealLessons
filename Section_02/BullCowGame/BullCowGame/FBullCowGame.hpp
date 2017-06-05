@@ -11,6 +11,16 @@
 
 #include <string>
 
+using FString = std::string;
+using int32 = int;
+
+// Create a new structure for a complicated return data
+struct FBullCowCount {
+    int32 Bull = 0;
+    int32 Cow = 0;
+};
+
+
 class FBullCowGame {
 
 public:
@@ -18,8 +28,8 @@ public:
     FBullCowGame();
     
     // Getter Functions
-    int GetMaxTries() const;
-    int GetCurrentTry() const;
+    int32 GetMaxTries() const;
+    int32 GetCurrentTry() const;
     
     // Checks if the game is won
     bool IsGameWon() const;
@@ -28,13 +38,17 @@ public:
     void Reset();
     
     // Checks if a given string is valid
-    bool CheckGuessValidity(std::string);
+    bool CheckGuessValidity(FString);
+    
+    // Assumes a valid guess
+    FBullCowCount SubmitGuess(FString);
     
     
 // Private variables
 private:
-    int MyCurrentTry;
-    int MyMaxTries;
+    int32 MyCurrentTry;
+    int32 MyMaxTries;
+    FString MyHiddenWord;
 };
 
 #endif /* FBullCowGame_hpp */
