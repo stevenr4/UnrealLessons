@@ -11,6 +11,7 @@
 
 #include <string>
 
+// To make syntax Unreal friendly
 using FString = std::string;
 using int32 = int;
 
@@ -20,6 +21,13 @@ struct FBullCowCount {
     int32 Cow = 0;
 };
 
+enum class EWordStatus {
+    OK,
+    Not_Isogram,
+    Too_Long,
+    Too_Short,
+    Not_Lowercase,
+};
 
 class FBullCowGame {
 
@@ -30,6 +38,8 @@ public:
     // Getter Functions
     int32 GetMaxTries() const;
     int32 GetCurrentTry() const;
+    FString GetHiddenWord() const;
+    int32 GetHiddenWordLength() const;
     
     // Checks if the game is won
     bool IsGameWon() const;
@@ -38,7 +48,13 @@ public:
     void Reset();
     
     // Checks if a given string is valid
-    bool CheckGuessValidity(FString);
+    EWordStatus CheckGuessValidity(FString) const;
+    
+    // Checks if a given string is valid
+    bool IsIsogram(FString) const;
+    
+    // Checks if a given string is valid
+    bool IsLowercase(FString) const;
     
     // Assumes a valid guess
     FBullCowCount SubmitGuess(FString);
@@ -46,9 +62,11 @@ public:
     
 // Private variables
 private:
+    // ALL SET IN THE Reset() METHOD!
     int32 MyCurrentTry;
     int32 MyMaxTries;
     FString MyHiddenWord;
+    bool BHasWon;
 };
 
 #endif /* FBullCowGame_hpp */
